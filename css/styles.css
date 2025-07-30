@@ -1,141 +1,41 @@
-html,body{
-	height:100%;
-}
-
-body{
-	background: #3f3f3f;
-	margin:0;
-	padding:0;
-	position: relative;
-	font-family: 'American Typewriter','Marker Felt';
-}
-
-#tetris{
-	left:50%;
-	top:50%;
-	position: absolute;
-	background: #555;
-	
-}
-
-#scene{
-	height:100%;
-	position: absolute;
-	background: #2f2f2f;
-}
-
-#gameOver{
-	height:100%;
-	position: absolute;
-	background:rgba(0,0,0,.75);
-	z-index:999;
-	color:#ffe100;
-	text-align: center;
-	display: none;
-}
-
-#gameOver h1{
-	margin-top:50%;
-}
-
-#gameOver a,#gameOver a:visited{
-	color:#66bc29;
-	text-decoration: none;
-}
-
-#gameOver h3{
-	color:orange;
-}
-
-#side{
-	height:100%;
-	position: absolute;
-	top:0;
-	right:0;
-	text-align: center;
-}
-
-#info{
-	width:120px;
-	margin:0 auto;
-}
-
-#preview{
-	width:80px;
-	height:80px;
-	background: #2f2f2f;
-	margin:10px auto;
-}
-
-#levelInfo{
-	color:#fff;
-	font-size:18px;
-	margin:10px 0;
-}
-#level{
-	color:orange;
-	font-size:32px;
-}
-
-#scoreInfo{
-	color:#fff;
-	font-size: 18px;
-	margin-top:0;
-}
-
-#score{
-	color:orange;
-	font-family: 'Chalkboard SE';
-}
-
-#rewardInfo{
-	color:yellow;
-	font-weight: bold;
-	height:20px;
-}
-
-
-
-
-
-.invisible{
-	visibility: hidden;
-}
-
-.animated {
-  -webkit-animation-duration: 1.5s;
-  animation-duration: 1.5s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-
-
+html,body{height:100%}
+body{background:#3f3f3f;margin:0;padding:0;position:relative;font-family:'American Typewriter','Marker Felt'}
+#tetris{left:50%;top:50%;position:absolute;background:#555}
+#scene{height:100%;position:absolute;background:#2f2f2f}
+#gameOver{height:100%;position:absolute;background:#000000bf;z-index:999;color:#ffe100;text-align:center;display:none}
+#gameOver h1{margin-top:50%}
+#gameOver a,#gameOver a:visited{color:#66bc29;text-decoration:none}
+#gameOver h3{color:orange}
+#side{height:100%;position:absolute;top:0;right:0;text-align:center}
+#info{width:120px;margin:0 auto}
+#preview{width:80px;height:80px;background:#2f2f2f;margin:10px auto}
+#levelInfo{color:#fff;font-size:18px;margin:10px 0}
+#level{color:orange;font-size:32px}
+#scoreInfo{color:#fff;font-size:18px;margin-top:0}
+#score{color:orange;font-family:'Chalkboard SE'}
+#rewardInfo{color:#ff0;font-weight:700;height:20px}
+.invisible{visibility:hidden}
+.animated{-webkit-animation-duration:1.5s;animation-duration:1.5s;-webkit-animation-fill-mode:both;animation-fill-mode:both}
 @-webkit-keyframes fadeOutUp {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
+0%{opacity:1}
+100%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}
 }
-
 @keyframes fadeOutUp {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    -ms-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
+0%{opacity:1}
+100%{opacity:0;-webkit-transform:translate3d(0,-100%,0);-ms-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}
 }
-
-.fadeOutUp {
-  -webkit-animation-name: fadeOutUp;
-  animation-name: fadeOutUp;
+.fadeOutUp{-webkit-animation-name:fadeOutUp;animation-name:fadeOutUp}
+@-webkit-keyframes fadeInDown {
+0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}
+100%{opacity:1}
 }
+#nextShapeInfo{color:#fff}
+.controls{display:flex;flex-direction:column;gap:12px;margin-top:20px;align-items:stretch;width:100%}
+.controls button{font-size:20px;font-weight:700;padding:12px 0;margin:0 7px;background:linear-gradient(to bottom,#4a90e2,#357ab7);color:#fff;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 6px #0003;transition:background .2s ease-in-out,transform .1s}
+.controls button:hover{background:linear-gradient(to bottom,#5aa0f0,#407fce)}
+.controls button:active{transform:scale(0.96)}
+@media (max-width: 768px) {
+.controls{margin-top:10px;gap:10px}
+.controls button{font-size:18px;padding:10px 0;margin:0 3px}
+}
+.overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:#000000b3;color:#fff;font-size:2rem;display:flex;align-items:center;justify-content:center;z-index:999;pointer-events:none}
