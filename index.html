@@ -48,6 +48,32 @@
     window._tetris = tetris;
     tetris.start();
 })();
+document.getElementById('left').addEventListener('click', () => {
+  window._tetris.shape.goLeft(window._tetris.matrix);
+  window._tetris._draw();
+});
+document.getElementById('right').addEventListener('click', () => {
+  window._tetris.shape.goRight(window._tetris.matrix);
+  window._tetris._draw();
+});
+document.getElementById('down').addEventListener('click', () => {
+  window._tetris.shape.goDown(window._tetris.matrix);
+  window._tetris._draw();
+});
+document.getElementById('rotate').addEventListener('click', () => {
+  window._tetris.shape.rotate(window._tetris.matrix);
+  window._tetris._draw();
+});
+
+document.getElementById('pause').addEventListener('click', function () {
+  if (window._tetris.running) {
+    window._tetris.pause();
+    this.textContent = 'Resume';
+  } else {
+    window._tetris.start();
+    this.textContent = 'Pause';
+  }
+});
 </script>
 </body>
 </html>
