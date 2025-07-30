@@ -370,6 +370,50 @@ function Tetris(id){
 }
 
 Tetris.prototype = {
+_initTouchEvents: function () {
+  const scene = views.scene;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchStartTime = 0;
+
+  const TAP_THRESHOLD = 10;
+  const TIME_THRESHOLD = 300;
+
+  scene.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchStartTime = Date.now();
+  });
+
+  scene.addEventListener('touchend', (e) => {
+    if (!this.shape || this.isGameOver) return;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    const dt = Date.now() - touchStartTime;
+
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
+
+    if (absDx < TAP_THRESHOLD && absDy < TAP_THRESHOLD && dt < TIME_THRESHOLD) {
+      // TAP -> Rotate
+      this.shape.rotate(this.matrix);
+      this._draw();
+      return;
+    }
+
+    if (absDx > absDy) {
+      if (dx > 20) this.shape.goRight(this.matrix);
+      else if (dx < -20) this.shape.goLeft(this.matrix);
+    } else {
+      if (dy > 20) this.shape.goDown(this.matrix);
+    }
+
+    this._draw();
+  });
+}	,
 
 	init:function(options){
 		
@@ -456,6 +500,46 @@ Tetris.prototype = {
 	},
 	// Bind game events
 	_initEvents:function(){
+		this._initTouchEvents(); // Add mobile touch controls
+
+		// Mobile swipe support
+this.scene = views.scene;
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+this.scene.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }
+}, false);
+
+this.scene.addEventListener('touchend', (e) => {
+    if (!this.shape || this.isGameOver) return;
+
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+
+    if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 20) {
+            this.shape.goRight(this.matrix);
+        } else if (dx < -20) {
+            this.shape.goLeft(this.matrix);
+        }
+    } else {
+        if (dy > 20) {
+            this.shape.goDown(this.matrix);
+        } else if (dy < -20) {
+            this.shape.rotate(this.matrix);
+        }
+    }
+
+    this._draw();
+}, false);
+
+
+
 		window.addEventListener('keydown',utils.proxy(this._keydownHandler,this),false);
 		views.btnRestart.addEventListener('click',utils.proxy(this._restartHandler,this),false);
 	},
@@ -1101,3 +1185,5 @@ var tetrisView = {
 
 module.exports = tetrisView;
 },{"./consts.js":2,"./utils.js":5}]},{},[3]);
+
+
