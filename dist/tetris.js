@@ -511,13 +511,18 @@ let lastX = 0;
 let moved = false;
 let movedHorizontal = false;
 let movedVertical = false;
-const gridSize = canvas.gridSize; // ширина однієї клітинки
+let touchStartTime = 0;
+
+const gridSize = canvas.gridSize; 
+const TAP_DISTANCE = 10;          
+const TAP_DURATION = 250;        
 
 this.scene.addEventListener('touchstart', (e) => {
     if (e.touches.length !== 1) return;
     const touch = e.touches[0];
     startX = lastX = touch.clientX;
     startY = touch.clientY;
+    touchStartTime = Date.now();
     moved = movedHorizontal = movedVertical = false;
 }, false);
 
@@ -543,9 +548,19 @@ this.scene.addEventListener('touchmove', (e) => {
 }, false);
 
 this.scene.addEventListener('touchend', (e) => {
-    if (!moved && !this.isGameOver && this.shape) {
-        this.shape.rotate(this.matrix);
-        this._draw();
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    const dt = Date.now() - touchStartTime;
+
+    const MIN_TAP_TIME = 250;    
+    const MAX_TAP_TIME = 700;     
+
+    if (!moved && Math.abs(dx) < TAP_DISTANCE && Math.abs(dy) < TAP_DISTANCE && dt >= MIN_TAP_TIME && dt <= MAX_TAP_TIME) {
+        if (!this.isGameOver && this.shape) {
+            this.shape.rotate(this.matrix);
+            this._draw();
+        }
     }
 }, false);
 
