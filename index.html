@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,30 +11,43 @@
 </head>
 <body>
 <div id="tetris">
-	<canvas id="scene"></canvas>
+	<canvas id="scene" tabindex="0"></canvas>
+
 	<div id="gameOver">
-		<h1>Game Over !</h1>
+		<h1>Game Over!</h1>
 		<h3>Score: <span id="finalScore">0</span></h3>
 		<h2><a href="#" id="restart">Restart</a></h2>
-		
 	</div>
+<div id="pausedOverlay" class="overlay" style="display: none;">
+  <h2>Paused</h2>
+</div>
 	<div id="side">
 		<div id="info">
 			<h1 id="levelInfo">Level: <br><span id="level">1</span></h1>
-			<h2 id="scoreInfo">Score: <br><span id="score" >0</span></h2>
+			<h2 id="scoreInfo">Score: <br><span id="score">0</span></h2>
 			<div id="rewardInfo" class="invisible">+<span id="reward">0</span></div>
+			<div id="nextShapeInfo">Next Shape:</div>
+			<div id="nextShape"></div>
 			<canvas id="preview"></canvas>
-		</div>
+			
+		 <div class="controls">
+    <button id="rotate">⟳</button>
+	<button id="left">◀</button>
+    <button id="right">▶</button>
+    <button id="down">▼</button>
+    <button id="pause">Pause</button>
+    
+  </div>
+
 	</div>
 </div>
-
-
-</body>
 <script src="dist/tetris.js"></script>
 <script>
-	(function(){
-		var tetris = new Tetris('tetris');
-		tetris.start();
-	})();
+(function(){
+    var tetris = new Tetris('tetris');
+    window._tetris = tetris;
+    tetris.start();
+})();
 </script>
+</body>
 </html>
