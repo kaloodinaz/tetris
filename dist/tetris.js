@@ -505,38 +505,50 @@ _initTouchEvents: function () {
 		// Mobile swipe support
 this.scene = views.scene;
 
-let touchStartX = 0;
-let touchStartY = 0;
+let startX = 0;
+let startY = 0;
+let lastX = 0;
+let moved = false;
+let movedHorizontal = false;
+let movedVertical = false;
+const gridSize = canvas.gridSize; // ширина однієї клітинки
 
 this.scene.addEventListener('touchstart', (e) => {
-    if (e.touches.length === 1) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
+    if (e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    startX = lastX = touch.clientX;
+    startY = touch.clientY;
+    moved = movedHorizontal = movedVertical = false;
+}, false);
+
+this.scene.addEventListener('touchmove', (e) => {
+    if (!this.shape || this.isGameOver) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - lastX;
+    const dy = touch.clientY - startY;
+
+    if (Math.abs(dx) > gridSize && !movedHorizontal) {
+        if (dx > 0) this.shape.goRight(this.matrix);
+        else this.shape.goLeft(this.matrix);
+        moved = movedHorizontal = true;
+        lastX = touch.clientX;
+        this._draw();
+    }
+
+    if (Math.abs(dy) > gridSize && !movedVertical) {
+        if (dy > 0) this.shape.goDown(this.matrix);
+        moved = movedVertical = true;
+        this._draw();
     }
 }, false);
 
 this.scene.addEventListener('touchend', (e) => {
-    if (!this.shape || this.isGameOver) return;
-
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-
-    if (Math.abs(dx) > Math.abs(dy)) {
-        if (dx > 20) {
-            this.shape.goRight(this.matrix);
-        } else if (dx < -20) {
-            this.shape.goLeft(this.matrix);
-        }
-    } else {
-        if (dy > 20) {
-            this.shape.goDown(this.matrix);
-        } else if (dy < -20) {
-            this.shape.rotate(this.matrix);
-        }
+    if (!moved && !this.isGameOver && this.shape) {
+        this.shape.rotate(this.matrix);
+        this._draw();
     }
-
-    this._draw();
 }, false);
+
 
 
 
