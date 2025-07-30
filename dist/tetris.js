@@ -515,7 +515,7 @@ let touchStartTime = 0;
 
 const gridSize = canvas.gridSize; 
 const TAP_DISTANCE = 10;          
-const TAP_DURATION = 250;        
+const TAP_DURATION = 500;        
 
 this.scene.addEventListener('touchstart', (e) => {
     if (e.touches.length !== 1) return;
@@ -553,8 +553,8 @@ this.scene.addEventListener('touchend', (e) => {
     const dy = touch.clientY - startY;
     const dt = Date.now() - touchStartTime;
 
-    const MIN_TAP_TIME = 250;    
-    const MAX_TAP_TIME = 700;     
+    const MIN_TAP_TIME = 500;    
+    const MAX_TAP_TIME = 1500;     
 
     if (!moved && Math.abs(dx) < TAP_DISTANCE && Math.abs(dy) < TAP_DISTANCE && dt >= MIN_TAP_TIME && dt <= MAX_TAP_TIME) {
         if (!this.isGameOver && this.shape) {
